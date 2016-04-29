@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="DashboardEntities">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+		<class>entities.Advisor</class>
+		<class>entities.Fund</class>
+		<class>entities.Sale</class>
+		<class>entities.Position</class>
+		<class>entities.Location</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/advisordb" />
+			<property name="javax.persistence.jdbc.user" value="administrator" />
+			<property name="javax.persistence.jdbc.password" value="administrator" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	
 	</persistence-unit>
 </persistence>
