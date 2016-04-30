@@ -25,6 +25,9 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery DataTable -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,9 +47,6 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">Dashboard</span> Home
-                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,9 +56,24 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <li class="nav-item"><a class="nav-link page-scroll" href="#login">Login</a></li>
-                    </li>
+                   
+                    <c:choose>
+                    	<c:when test="${empty advisors}">
+		                    <li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Login</a></li>
+		                    </li>
+                    	</c:when>  
+                    	<c:otherwise>
+                    		<li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${userName}</a></li>
+		                    </li>
+		                    <li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Log Out</a></li>
+		                    </li>
+                    	</c:otherwise>                  
+                    </c:choose>
+                    
+                    
                     <li>
                         <li class="nav-item"><a class="nav-link page-scroll" href="#contact">Connect</a></li>
                     </li>
@@ -67,38 +82,36 @@
         </div><!-- /.container -->
     </nav>
 
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Performance</h1>
-                        <a href="#login" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Login Section -->
-    <section id="login" class="container content-section text-center">
+    <!-- Table Section -->
+    <section id="table" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-4 col-lg-offset-4">
-            <form>
-				<div class="form-group">
-				  <label for="userName">User Name</label>
-				  <input type="userName" class="form-control" id="userName" placeholder="User Name">
-				</div>
-				<div class="form-group">
-				  <label for="exampleInputPassword1">Password</label>
-				  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-            </div>
+            <div class="col-lg-6">
+				<table id="allAdvisors" class="display compact" cellspacing="0"
+					width="100%">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Salary</th>
+							<th>Fund</th>
+							<th>Position</th>
+							<th>Location</th>
+						</tr>
+					</thead>
+					<tbody>
+ 						<c:forEach var="row" items="${advisors}">
+							<tr>
+								<td><a href="GoToUpdateAdvisor.do?id=${row.id}">${row.id}</a></td>
+								<td>${row.name}</td>
+								<td><fmt:formatNumber value="${row.salary}" type="currency"></fmt:formatNumber></td>
+								<td>${row.fund.fundName}</td>
+								<td>${row.position.positionName}</td>
+								<td>${row.location.city}, ${row.location.country}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
         </div>
     </section>
 
@@ -106,26 +119,10 @@
     <section id="contact" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Let's Connect</h2>
-                <p>Special thanks to <a href="https://unsplash.com/">Unsplash</a>, <a href="http://startbootstrap.com/">Start Bootstrap</a> and <a href="http://skilldistillery.com/">Skill Distillery!</a></p>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="https://twitter.com/chrisrioux_" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/chrisrioux2" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/in/chris-rioux-b500569a" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square fa-fw"></i> <span class="network-name">LinkedIn</span></a>
-                    </li>
-                </ul>
-            <p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
+            	<p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
             </div>
         </div>
     </section>
-
-    <!-- Map Section -->
-    <div id="map"></div>
     
 
     <!-- jQuery -->
@@ -137,11 +134,17 @@
     <!-- Plugin JavaScript -->
     <script src="js/jquery.easing.min.js"></script>
 
-    <!-- Google Maps API Key -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSSAAWotmJGQ1HzdUQHGJTHUm7m8cG2RU"></script> 
-  
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+    
+    <!-- jQuery DataTable -->
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+
+		<script>
+	    	$(document).ready(function() {
+	        	$('#allAdvisors').DataTable();
+	    	} );
+	    </script>
     
 </body>
 

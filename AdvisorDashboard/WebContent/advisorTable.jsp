@@ -47,9 +47,6 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="index.jsp">
-                    <i class="fa fa-play-circle"></i>  <span class="light">Dashboard</span> Home
-                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,6 +66,9 @@
                     	<c:otherwise>
                     		<li>
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${userName}</a></li>
+		                    </li>
+		                    <li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>
@@ -101,7 +101,7 @@
 					<tbody>
  						<c:forEach var="row" items="${advisors}">
 							<tr>
-								<td><a href="GoToUpdateAdvisor.do?id=${row.id}">${row.id}</a></td>
+								<td><a href="GoToAdvisor.do?id=${row.id}">${row.id}</a></td>
 								<td>${row.name}</td>
 								<td><fmt:formatNumber value="${row.salary}" type="currency"></fmt:formatNumber></td>
 								<td>${row.fund.fundName}</td>

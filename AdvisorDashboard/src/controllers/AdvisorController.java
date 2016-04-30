@@ -2,25 +2,41 @@ package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.AdvisorDBDAO;
 import entities.Advisor;
 
 @Controller
+@SessionAttributes("name")
 public class AdvisorController {
 	@Autowired
 	private AdvisorDBDAO advisorDAO;
 	
+	@ModelAttribute("name")
+	   public String name()
+	   {
+	       String name = "name";
+	       return name;
+	   }
+	
+	
 	@RequestMapping(path="Login.do")
-	public ModelAndView login(String name, String password) {
+	public ModelAndView login(Model model, @ModelAttribute ("name") String userName, String name, String password) {
 		ModelAndView mv = new ModelAndView();
 
 		if (advisorDAO.login(name, password) ) {
 			mv.setViewName("GetAllAdvisors.do");	
 			mv.addObject("userName", name);
+			
+			model.addAttribute(name);
+			
+			
 			return mv;
 		}
 		else {
