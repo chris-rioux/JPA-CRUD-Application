@@ -26,8 +26,12 @@ public class Sale {
 	@ManyToOne
 	@JoinColumn(name="fund_id")
 	private Fund fund;
-
 	
+	@ManyToOne
+	@JoinColumn(name="advisor_id")
+	private Advisor advisor;
+
+
 	public Sale() {
 		super();
 	}
@@ -48,6 +52,9 @@ public class Sale {
 	public Fund getFund() {
 		return fund;
 	}
+	public Advisor getAdvisor() {
+		return advisor;
+	}
 
 
 	public void setPrice(int price) {
@@ -61,6 +68,9 @@ public class Sale {
 	}
 	public void setFund(Fund fund) {
 		this.fund = fund;
+	}
+	public void setAdvisor(Advisor advisor) {
+		this.advisor = advisor;
 	}
 	
 

@@ -58,7 +58,7 @@
                     </li>
                    
                     <c:choose>
-                    	<c:when test="${empty advisors}">
+                    	<c:when test="${empty advisor}">
 		                    <li>
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Login</a></li>
 		                    </li>
@@ -81,52 +81,50 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->
     </nav>
-    
-    <!-- Add Advisor Section -->
-    <section id="addAvisor" class="container content-section text-center" style="margin-top:-100px;">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Add an Advisor</h2>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="GoToAddAdvisor.do" class="btn btn-default btn-lg">Add Advisor</a>
-                        <!-- <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a> -->
-                    </li>
-                    
-                </ul>
-            </div>
-        </div><!-- /.row -->
-    </section>
 
-    <!-- Table Section -->
-    <section id="table" class="container content-section text-center" style="margin-top:-225px;">
+    <!-- Advisor Section -->
+    <section id="advisorInfo" class="container content-section text-center" style="margin-top:-200px;">
         <div class="row">
-            <div class="col-lg-12">
-				<table id="allAdvisors" class="display compact" cellspacing="0"
-					width="100%">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Salary</th>
-							<th>Position</th>
-							<th>Location</th>
-						</tr>
-					</thead>
-					<tbody>
- 						<c:forEach var="row" items="${advisors}">
-							<tr>
-								<td><a href="GetAdvisor.do?id=${row.id}">${row.id}</a></td>
-								<td>${row.name}</td>
-								<td><fmt:formatNumber value="${row.salary}" type="currency"></fmt:formatNumber></td>
-								<td>${row.position.positionName}</td>
-								<td>${row.location.address} ${row.location.city}, ${row.location.country}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+            <div class="col-md-8 col-md-offset-2">
+            	<div class="well" style="margin-top:100px;">
+            		<div class="row clearfix">
+			        	<div class="col-xs-8">
+			            	<div class="panel panel-primary">	
+			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
+			                        <h3 class="panel-title">Advisor Information</h3>
+			                    </div>			
+			                    <div class="panel-body">
+									<form action="AddAdvisor.do">
+	                    			<fieldset>	
+	                    				<!-- id will auto-increment by the AdvisorDBJPADAO -->
+	                    				<input type="text" name="name" placeholder="First & Last Name"/><br/>
+	 									<input type="int" name="salary" value="" placeholder="Salary"/><br/>
+	 									<input type="text" name="password" value="" placeholder="Password"/><br/>
+	 									<input type="text" name="position" value="" placeholder="Position"/><br/>
+	 									<input type="text" name="location" value="" placeholder="Location"/><br/>
+	 								</fieldset>
+	 								</br>
+	 								<form action="AddAdvisor.do?id=${advisor.id}">
+							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" value="Add Advisor">Add Advisor</button>
+									</form>
+									</form>  		
+			            		</div>
+			            	</div>
+			            </div>
+			            <div class="col-xs-4">
+			            	<div class="panel panel-primary">	
+			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
+			                        <h3 class="panel-title"></h3>
+			                    </div>
+			                    <div class="panel-body">
+									<img src="${url}"/>
+								</div>            			
+			            	</div>
+			            </div>
+			        </div><!-- /.row -->
+            	</div>
 			</div>
-        </div>
+		</div><!-- /.row -->
     </section>
 
     <!-- Contact Section -->
@@ -150,18 +148,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
-    
-    <!-- jQuery DataTable -->
-	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-
-		<script>
-	    	$(document).ready(function() {
-	        	$('#allAdvisors').DataTable( {
-	        		scrollY:        '50vh',
-		            scrollCollapse: true	
-	        	} );
-	    	} );
-	    </script>
     
 </body>
 

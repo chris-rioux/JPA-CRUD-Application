@@ -22,9 +22,6 @@ public class Fund {
 	
 	
 	@OneToMany(mappedBy="fund")
-	private List<Advisor> advisors;
-	
-	@OneToMany(mappedBy="fund")
 	private List<Sale> sales;
 	
 
@@ -42,9 +39,6 @@ public class Fund {
 	public String getBroker() {
 		return broker;
 	}
-	public List<Advisor> getAdvisors() {
-		return advisors;
-	}
 	public List<Sale> getSales() {
 		return sales;
 	}
@@ -56,9 +50,6 @@ public class Fund {
 	}
 	public void setBroker(String broker) {
 		this.broker = broker;
-	}
-	public void setAdvisors(List<Advisor> advisors) {
-		this.advisors = advisors;
 	}
 	public void setSales(List<Sale> sales) {
 		this.sales = sales;

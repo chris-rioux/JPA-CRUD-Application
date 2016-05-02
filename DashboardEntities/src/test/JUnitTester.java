@@ -33,9 +33,7 @@ public class JUnitTester {
 		assertEquals("Velma Q. Melendez", a.getName());
 		assertEquals(268606, a.getSalary());
 		assertEquals("manager", a.getPosition().getPositionName());
-		assertEquals(10, a.getFund().getId());
 		assertEquals("New York City", a.getLocation().getCity());
-		assertEquals(3, a.getFund().getSales().get(0).getId());
 	}
 	
 	// testing fund table

@@ -82,41 +82,70 @@
         </div><!-- /.container -->
     </nav>
 
-    <!-- Table Section -->
-    <section id="table" class="container content-section text-center">
+    <!-- Advisor Section -->
+    <section id="advisorInfo" class="container content-section text-center" style="margin-top:-175px;">
         <div class="row">
-            <div class="col-lg-6">
-				<table id="allAdvisors" class="display compact" cellspacing="0"
-					width="100%">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Salary</th>
-							<th>Fund</th>
-							<th>Position</th>
-							<th>Location</th>
-						</tr>
-					</thead>
-					<tbody>
- 						<c:forEach var="row" items="${advisors}">
-							<tr>
-								<td><a href="GoToUpdateAdvisor.do?id=${row.id}">${row.id}</a></td>
-								<td>${row.name}</td>
-								<td><fmt:formatNumber value="${row.salary}" type="currency"></fmt:formatNumber></td>
-								<td>${row.fund.fundName}</td>
-								<td>${row.position.positionName}</td>
-								<td>${row.location.city}, ${row.location.country}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+            <div class="col-md-6">
+            	<div class="well" style="margin-top:100px;">
+            		<div class="row clearfix">
+			        	<div class="col-xs-8">
+			            	<div class="panel panel-primary">	
+			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
+			                        <h3 class="panel-title">Advisor Information</h3>
+			                    </div>			
+			                    <div class="panel-body">
+									<ul style="text-align:left; color:#797c80;">
+										<li>Advisor ID: <a href="GoToUpdateAdvisor.do?id=${advisor.id}">${advisor.id}</a></li>
+										<li>Name: ${advisor.name}</li>
+										<li>Salary: <fmt:formatNumber value="${advisor.salary}" type="currency"></fmt:formatNumber></li>
+										<li>Role: ${advisor.position.positionName}</li>
+										<li>Location: ${advisor.location.city}, ${advisor.location.country}</li>					
+									</ul>            		
+			            		</div>
+			            	</div>
+			            </div>
+			            <div class="col-xs-4">
+			            	<div class="panel panel-primary">	
+			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
+			                        <h3 class="panel-title">Options</h3>
+			                    </div>
+			                    <div class="panel-body">
+									<form action="GoToUpdateAdvisor.do?id=${advisor.id}">
+							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" value="Update Employee">Update</button>
+									</form>
+									</br>
+							        <form action="DeleteAdvisor.do?id=${advisor.id}" method="POST">
+										<input type="hidden" name="id" value="${advisor.id}"/>
+										<button class="btn btn-md text-normal btn-danger" type="submit" name="id" value="Delete">Delete</button>
+									</form>
+								</div>            			
+			            	</div>
+			            </div>
+			        </div><!-- /.row -->
+            	</div>
 			</div>
-        </div>
+			
+			<div class="col-md-3" id="charts">
+				<canvas id="DoughnutChart" width="200" height="300"></canvas>
+				<!-- <canvas id="advisorDoughnutChart" width="200" height="300"></canvas> -->
+			</div>
+			<div class="col-md-3" id="charts">
+				<canvas id="BarChart" width="200" height="300"></canvas>
+				<!-- <canvas id="advisorBarChart" width="200" height="300"></canvas> -->
+			</div>
+        </div><!-- /.row -->
+        
+        <div class="row">
+        	<div class="col-md-8 col-md-offset-2">
+        		<canvas id="LineChart" width="600" height="300"></canvas>
+        		<!-- <canvas id="advisorLineChart" width="600" height="300"></canvas> -->
+        	</div>
+        </div><!-- /.row -->
+        
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
+    <section id="contact" class="container content-section text-center" style="margin-top:-100px;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
             	<p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
@@ -140,11 +169,16 @@
     <!-- jQuery DataTable -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 
-		<script>
-	    	$(document).ready(function() {
-	        	$('#allAdvisors').DataTable();
-	    	} );
-	    </script>
+	<script>
+    	$(document).ready(function() {
+        	$('#table').DataTable();
+    	} );
+    </script>
+    
+    <!-- ChartJS -->
+	<script src="js/Chart.js-master/Chart.js"></script>
+	<script src="js/placeholderCharts.js"></script>
+	    
     
 </body>
 

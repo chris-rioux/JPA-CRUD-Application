@@ -73,7 +73,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Performance</h1>
+                        <h1 class="brand-heading">Advisor Performance</h1>
+                        <p class="intro-text">Funds Analytics Dashboard</p>
                         <a href="#login" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -84,9 +85,9 @@
     </header>
 
     <!-- Login Section -->
-    <section id="login" class="container content-section text-center">
+    <section id="login" class="container content-section text-center" style="margin-top:-50px;">
         <div class="row">
-            <div class="col-lg-4 col-lg-offset-2">
+            <div class="col-md-4 col-md-offset-4">
             <form action="Login.do">
 				<div class="form-group">
 				  <label for="userName">User Name</label>
@@ -103,7 +104,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
+    <section id="contact" class="container content-section text-center" style="margin-top:-100px;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Let's Connect</h2>
@@ -113,7 +114,7 @@
                         <a href="https://twitter.com/chrisrioux_" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                     </li>
                     <li>
-                        <a href="https://github.com/chrisrioux2" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        <a href="https://github.com/chris-rioux" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                     </li>
                     <li>
                         <a href="https://www.linkedin.com/in/chris-rioux-b500569a" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square fa-fw"></i> <span class="network-name">LinkedIn</span></a>

@@ -1,11 +1,14 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,18 +23,17 @@ public class Advisor {
 
 	
 	@ManyToOne
-	@JoinColumn(name="fund_id")
-	private Fund fund;
-	
-	@ManyToOne
 	@JoinColumn(name="position_id")
 	private Position position;
 	
 	@ManyToOne
 	@JoinColumn(name="location_id")
 	private Location location;
-
 	
+	@OneToMany(mappedBy="advisor")
+	private List<Sale> sales;
+
+
 	public Advisor() {
 		super();
 	}
@@ -49,14 +51,14 @@ public class Advisor {
 	public String getPassword() {
 		return password;
 	}
-	public Fund getFund() {
-		return fund;
-	}
 	public Position getPosition() {
 		return position;
 	}
 	public Location getLocation() {
 		return location;
+	}
+	public List<Sale> getSales() {
+		return sales;
 	}
 	
 	
@@ -69,14 +71,14 @@ public class Advisor {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setFund(Fund fund) {
-		this.fund = fund;
-	}
 	public void setPosition(Position position) {
 		this.position = position;
 	}
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
 	}
 	
 	
