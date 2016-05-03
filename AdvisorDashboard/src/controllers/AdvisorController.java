@@ -11,8 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dao.AdvisorDBDAO;
 import entities.Advisor;
-import entities.Location;
-import entities.Position;
+import transferobjects.AdvisorTransferObject;
 
 @Controller
 @SessionAttributes("user")
@@ -67,12 +66,13 @@ public class AdvisorController {
 		mv.addObject("advisor", a);
 		
 		// get the sales data for the advisor
-//		mv.addObject("fundSales", advisorDAO.getAdvisorSales(id));
-	
+		mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(id));	
+		mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(id));	
+		mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(id));	
 		return mv;
 	}
 	
-	@RequestMapping(path="GetAllAdvisors.do")
+	@RequestMapping(path="GetAllAdvisors.do", method=RequestMethod.GET)
 	public ModelAndView getAllAdvisors() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("advisorTable.jsp");
@@ -97,17 +97,17 @@ public class AdvisorController {
 		return mv;
 	}
 	
-	@RequestMapping(path="AddAdvisor.do")
-	public ModelAndView addAdvisor(String name, Integer salary, String password, int position, int location) {
+	@RequestMapping(path="AddAdvisor.do", method=RequestMethod.POST)
+	public ModelAndView addAdvisor(AdvisorTransferObject ato) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("advisorTable.jsp");		
-		advisorDAO.addAdvisor(name, salary, password, position, location);
+		advisorDAO.addAdvisor(ato);
 		mv.addObject("advisors", advisorDAO.getAllAdvisors());
 		return mv;
 	}
 
 	@RequestMapping(path="GoToUpdateAdvisor.do", method=RequestMethod.GET)
-	public ModelAndView updateAdvisor(int id) {
+	public ModelAndView goToUpdateAdvisor(int id) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateAdvisor.jsp");
 		
@@ -127,13 +127,17 @@ public class AdvisorController {
 		return mv;
 	}
 
-	@RequestMapping(path="UpdateAdvisor.do", method=RequestMethod.GET)
-	public ModelAndView updateAdvisor(Integer id, Advisor a) {
+	@RequestMapping(path="UpdateAdvisor.do", method=RequestMethod.POST)
+	public ModelAndView updateAdvisor(AdvisorTransferObject a) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("advisor.jsp");		
-		advisorDAO.updateAdvisor(id, a);		
-		mv.addObject("advisor", a);
-		System.out.println("Controller: " + a.getId() + " " + a.getName() + " " + a.getSalary() + " " + a.getPassword());
+		Advisor updatedAdvisor = advisorDAO.updateAdvisor(a);
+		mv.addObject("advisor", updatedAdvisor);
+		
+		// get the sales data for the advisor
+		mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(a.getId()));	
+		mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(a.getId()));	
+		mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(a.getId()));
 		return mv;
 	}
 	

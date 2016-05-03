@@ -90,7 +90,6 @@
                 <ul class="list-inline banner-social-buttons">
                     <li>
                         <a href="GoToAddAdvisor.do" class="btn btn-default btn-lg">Add Advisor</a>
-                        <!-- <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a> -->
                     </li>
                     
                 </ul>
@@ -154,14 +153,14 @@
     <!-- jQuery DataTable -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 
-		<script>
-	    	$(document).ready(function() {
-	        	$('#allAdvisors').DataTable( {
-	        		scrollY:        '50vh',
-		            scrollCollapse: true	
-	        	} );
-	    	} );
-	    </script>
+	<script>
+    	$(document).ready(function() {
+        	$('#allAdvisors').DataTable( {
+        		scrollY:        '50vh',
+	            scrollCollapse: true	
+        	} );
+    	} );
+    </script>
     
 </body>
 

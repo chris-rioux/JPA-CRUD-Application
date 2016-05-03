@@ -5,6 +5,7 @@ import java.util.List;
 import entities.Advisor;
 import entities.Location;
 import entities.Position;
+import transferobjects.AdvisorTransferObject;
 
 public interface AdvisorDBDAO {
 	// login specific
@@ -13,10 +14,12 @@ public interface AdvisorDBDAO {
 	// advisor specific
 	public Advisor getAdvisor(int id);
 	public Advisor getAdvisor(String name);
-//	public HashMap<String, Integer> getAdvisorSales(int id);
 	public List<Advisor> getAllAdvisors();
-	public void addAdvisor(String name, Integer salary, String password, int position, int location);
-	public void updateAdvisor(Integer id, Advisor a);
+	public List<Object[]> getAdvisorFundSales(int id);
+	public List<Object[]> getAdvisorYearSales(int id);
+	public List<Object[]> getAdvisorTrendSales(int id);
+	public void addAdvisor(AdvisorTransferObject ato);
+	public Advisor updateAdvisor(AdvisorTransferObject ato);
 	public void deleteAdvisor(int id);
 	
 	// position specific

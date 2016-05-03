@@ -97,7 +97,7 @@
 			                        <h3 class="panel-title">Advisor Information</h3>
 			                    </div>			
 			                    <div class="panel-body">
-									<form action="UpdateAdvisor.do">
+									<form action="UpdateAdvisor.do" method="POST">
 	                    			<fieldset>	
 	                    				<div class="input-group">
 											<input type="text" class="form-control" name="name" value="${advisor.name}" aria-describedby="basic-addon1">
@@ -133,9 +133,8 @@
 										</br>
 	 								</fieldset>
 	 								</br>
-	 								<form action="UpdateAdvisor.do?id=${advisor.id}">
-							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" value="Update Advisor">Update Advisor</button>
-									</form>
+	 								<input type="hidden" name="id" value="${advisor.id}"/>
+ 							    	<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id" value="Update">Update Advisor</button>
 									</form>  		
 			            		</div>
 			            	</div>

@@ -113,7 +113,7 @@
 			                        <h3 class="panel-title">Options</h3>
 			                    </div>
 			                    <div class="panel-body">
-									<form action="GoToUpdateAdvisor.do?id=${advisor.id}">
+									<form action="GoToUpdateAdvisor.do?id=${advisor.id}" method="GET">
 										<input type="hidden" name="id" value="${advisor.id}"/>
 							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id" value="Update">Update</button>
 									</form>
@@ -129,20 +129,20 @@
             	</div>
 			</div>
 			
-			<div class="col-md-3" id="charts">
-				<canvas id="DoughnutChart" width="200" height="300"></canvas>
-				<!-- <canvas id="advisorDoughnutChart" width="200" height="300"></canvas> -->
+			<div class="col-md-3" id="charts" style="margin-top:55px;">
+				<!-- placeholderCharts.js <canvas id="DoughnutChart" width="200" height="300"></canvas> -->
+				<canvas id="advisorDoughnutChart" width="200" height="300"></canvas>
 			</div>
-			<div class="col-md-3" id="charts">
-				<canvas id="BarChart" width="200" height="300"></canvas>
-				<!-- <canvas id="advisorBarChart" width="200" height="300"></canvas> -->
+			<div class="col-md-3" id="charts" style="margin-top:55px;">
+				<canvas id="advisorBarChart" width="200" height="300"></canvas>
+				<!-- placeholderCharts.js <canvas id="advisorBarChart" width="200" height="300"></canvas> -->
 			</div>
         </div><!-- /.row -->
         
         <div class="row">
-        	<div class="col-md-8 col-md-offset-2">
-        		<canvas id="LineChart" width="600" height="300"></canvas>
-        		<!-- <canvas id="advisorLineChart" width="600" height="300"></canvas> -->
+        	<div class="col-md-8 col-md-offset-2" style="margin-top:25px;">
+        		<canvas id="advisorLineChart" width="600" height="300"></canvas>
+        		<!-- placeholderCharts.js <canvas id="advisorLineChart" width="600" height="300"></canvas> -->
         	</div>
         </div><!-- /.row -->
         
@@ -181,9 +181,94 @@
     
     <!-- ChartJS -->
 	<script src="js/Chart.js-master/Chart.js"></script>
-	<script src="js/placeholderCharts.js"></script>
+	<!-- <script src="js/placeholderCharts.js"></script> -->
 	    
-    
+	<script>
+	// universal color code randomizer
+	function randomColor() {return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});}
+	
+	// advisor sales by fund doughnut chart
+	var ctx = document.getElementById("advisorDoughnutChart").getContext("2d");
+		
+	var advisorFundSalesData = [ 
+	            		<c:forEach var="value" items="${advisorFundSales}"> 
+	            			<c:if test="${!empty value[0]}">
+	            				{
+	            					value : ${value[1]},
+	            					color : randomColor(),
+	            					highlight : randomColor(),
+	            					label : "${value[0]}"
+	            				}, 
+	            			</c:if>
+	            		</c:forEach>
+	            		];
+	var options = {
+		tooltipTemplate: 
+			function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+				animation: false,
+		scaleLabel:
+			function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
+	};
+	
+	var advisorDoughnutChart = new Chart(ctx).Doughnut(advisorFundSalesData, options);
+
+	// advisor sales by year bar chart
+	var ctx = document.getElementById("advisorBarChart").getContext("2d");
+	
+	var advisorYearSalesData = {
+			labels: [<c:forEach var="value" items="${advisorYearSales}">"${value[0]}", </c:forEach>],
+			datasets: [
+				{
+					label: "Year Sales Dataset",
+					fillColor: randomColor(),
+            		strokeColor: randomColor(),
+            		highlightFill: randomColor(),
+            		highlightStroke: randomColor(),
+					data: [<c:forEach var="value" items="${advisorYearSales}">"${value[1]}", </c:forEach>]					
+				}
+			]		
+	};
+	
+	var options = {
+			tooltipTemplate: 
+				function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+			animation: false,
+			scaleLabel:
+				function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
+	};
+	
+	var advisorBarChart = new Chart(ctx).Bar(advisorYearSalesData, options);
+	
+	// advisor sales trend line chart
+	var ctx = document.getElementById("advisorLineChart").getContext("2d");
+	
+	var advisorTrendSalesData = {
+			labels: [<c:forEach var="value" items="${advisorTrendSales}">"${value[0]}", </c:forEach>],
+			datasets: [
+				{
+					label: "Trend Sales Dataset",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [<c:forEach var="value" items="${advisorTrendSales}">"${value[1]}", </c:forEach>]
+				}	           
+			]
+	};
+	
+	var options = {
+			tooltipTemplate: 
+				function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+			animation: false,
+			scaleLabel:
+				function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
+	};
+	
+	var advisorLineChart = new Chart(ctx).Line(advisorTrendSalesData, options);
+	</script>
+	 
 </body>
 
 </html>
