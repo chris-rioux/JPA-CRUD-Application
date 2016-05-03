@@ -11,4 +11,4 @@ Week 10 Skill Distillery project leveraging the stack below to develop a JPA CRU
   - jQuery
   - Bootstrap v3
   - MySQL
-  - ChartsJS
+  - ChartJS
