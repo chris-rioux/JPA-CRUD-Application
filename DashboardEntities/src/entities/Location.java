@@ -67,6 +67,29 @@ public class Location {
 	public void setAdvisors(List<Advisor> advisors) {
 		this.advisors = advisors;
 	}
+	
+	
+	public void addAdvisor(Advisor advisor) {
+        if (!advisors.contains(advisor)) {
+            // add advisor to this location's list
+            advisors.add(advisor);
+            // remove advisor from their old location
+            if (advisor.getLocation() != null) {
+                advisor.getLocation().getAdvisors().remove(advisor);
+            }
+            // Bidirectional, so add location to the advisor
+            advisor.setLocation(this);
+        }
+    }
+    
+    public void removeAdvisor(Advisor advisor) {
+        if (advisors.contains(advisor))  {
+            // remove advisor from this location's list
+            advisors.remove(advisor);
+            // Bidirectional, so null out the location in the advisor
+            advisor.setLocation(null);
+        }
+    }
 
 	
 }

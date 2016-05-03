@@ -47,6 +47,9 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
+                <a class="navbar-brand page-scroll" href="GetAllAdvisors.do">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Back</span> to All Advisors
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,21 +57,21 @@
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
-                        <a href="#page-top"></a>
+                        <a href="#"></a>
                     </li>
                    
                     <c:choose>
-                    	<c:when test="${empty advisor}">
+                    	<c:when test="${empty user}">
 		                    <li>
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Login</a></li>
 		                    </li>
                     	</c:when>  
                     	<c:otherwise>
                     		<li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${userName}</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${user.name}</a></li>
 		                    </li>
 		                    <li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Log Out</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="Logout.do">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>
@@ -96,11 +99,38 @@
 			                    <div class="panel-body">
 									<form action="UpdateAdvisor.do">
 	                    			<fieldset>	
-	                    				<input type="text" name="name" placeholder="First & Last Name"/><br/>
-	 									<input type="int" name="salary" value="" placeholder="Salary"/><br/>
-	 									<input type="text" name="password" value="" placeholder="Password"/><br/>
-	 									<input type="text" name="position" value="" placeholder="Position"/><br/>
-	 									<input type="text" name="location" value="" placeholder="Location"/><br/>
+	                    				<div class="input-group">
+											<input type="text" class="form-control" name="name" value="${advisor.name}" aria-describedby="basic-addon1">
+										</div>
+										</br>
+										<div class="input-group">
+											<input type="int" class="form-control" name="salary" value="${advisor.salary}" type="currency" aria-describedby="basic-addon1">
+										</div>
+										</br>
+										<div class="input-group">
+											<input type="text" class="form-control" name="password" value="${advisor.password}" aria-describedby="basic-addon1">
+										</div>
+										</br>
+										
+										<div class="input-group">
+											<label for="sel1">Role</label>
+											<select class="form-control" id="sel1" name="position">
+											    <c:forEach var="position" items="${positions}">
+													<option value="${position.id}">${position.positionName}</option>
+												</c:forEach>
+											</select>
+										</div><!-- /input-group -->
+										</br>
+										
+										<div class="input-group">
+											<label for="sel1">Office</label>
+											<select class="form-control" id="sel1" name="location">
+											    <c:forEach var="location" items="${locations}">
+													<option value="${location.id}">${location.address}</option>
+												</c:forEach>
+											</select>
+										</div><!-- /input-group -->
+										</br>
 	 								</fieldset>
 	 								</br>
 	 								<form action="UpdateAdvisor.do?id=${advisor.id}">
@@ -113,10 +143,10 @@
 			            <div class="col-xs-4">
 			            	<div class="panel panel-primary">	
 			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
-			                        <h3 class="panel-title"></h3>
+			                        <h3 class="panel-title">${advisor.name}</h3>
 			                    </div>
 			                    <div class="panel-body">
-									<img src="${url}"/>
+									<img class="img-responsive" src="${url}"/>
 								</div>            			
 			            	</div>
 			            </div>

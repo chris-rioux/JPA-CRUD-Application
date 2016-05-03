@@ -47,6 +47,9 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
+                <a class="navbar-brand page-scroll" href="GetAllAdvisors.do">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Back</span> to All Advisors
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,21 +57,21 @@
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
-                        <a href="#page-top"></a>
+                        <a href="#"></a>
                     </li>
                    
                     <c:choose>
-                    	<c:when test="${empty advisors}">
+                    	<c:when test="${empty user}">
 		                    <li>
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Login</a></li>
 		                    </li>
                     	</c:when>  
                     	<c:otherwise>
                     		<li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${userName}</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${user.name}</a></li>
 		                    </li>
 		                    <li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Log Out</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="Logout.do">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>
@@ -111,7 +114,8 @@
 			                    </div>
 			                    <div class="panel-body">
 									<form action="GoToUpdateAdvisor.do?id=${advisor.id}">
-							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" value="Update Employee">Update</button>
+										<input type="hidden" name="id" value="${advisor.id}"/>
+							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id" value="Update">Update</button>
 									</form>
 									</br>
 							        <form action="DeleteAdvisor.do?id=${advisor.id}" method="POST">

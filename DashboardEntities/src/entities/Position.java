@@ -46,6 +46,29 @@ public class Position {
 	public void setAdvisors(List<Advisor> advisors) {
 		this.advisors = advisors;
 	}
+	
+	
+	public void addAdvisor(Advisor advisor) {
+        if (!advisors.contains(advisor)) {
+            // add advisor to this position's list
+            advisors.add(advisor);
+            // remove advisor from their old position
+            if (advisor.getPosition() != null) {
+                advisor.getPosition().getAdvisors().remove(advisor);
+            }
+            // Bidirectional, so add position to the advisor
+            advisor.setPosition(this);
+        }
+    }
+    
+    public void removeAdvisor(Advisor advisor) {
+        if (advisors.contains(advisor))  {
+            // remove advisor from this position's list
+            advisors.remove(advisor);
+            // Bidirectional, so null out the position in the advisor
+            advisor.setPosition(null);
+        }
+    }
 
 
 }

@@ -58,17 +58,17 @@
                     </li>
                    
                     <c:choose>
-                    	<c:when test="${empty advisors}">
+                    	<c:when test="${empty user}">
 		                    <li>
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Login</a></li>
 		                    </li>
                     	</c:when>  
                     	<c:otherwise>
                     		<li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${userName}</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${user.name}</a></li>
 		                    </li>
 		                    <li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="index.jsp">Log Out</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" href="Logout.do">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>

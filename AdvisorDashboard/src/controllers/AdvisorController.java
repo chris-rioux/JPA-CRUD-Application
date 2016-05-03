@@ -15,27 +15,27 @@ import entities.Location;
 import entities.Position;
 
 @Controller
-@SessionAttributes("name")
+@SessionAttributes("user")
 public class AdvisorController {
 	@Autowired
 	private AdvisorDBDAO advisorDAO;
 	
-	@ModelAttribute("name")
-	   public String name()
+	@ModelAttribute("user")
+	   public Advisor getUser()
 	   {
-	       String name = "name";
-	       return name;
+	       Advisor user = new Advisor();
+	       return user;
 	   }
 	
 	
 	@RequestMapping(path="Login.do")
-	public ModelAndView login(Model model, @ModelAttribute ("name") String userName, String name, String password) {
+	public ModelAndView login(Model model, @ModelAttribute ("user") Advisor user, String name, String password) {
 		ModelAndView mv = new ModelAndView();
 
+		
 		if (advisorDAO.login(name, password) ) {
-			mv.setViewName("GetAllAdvisors.do");	
-			mv.addObject("userName", name);
-			model.addAttribute(name);			
+			mv.setViewName("GetAllAdvisors.do");
+			model.addAttribute("user", advisorDAO.getAdvisor(name));
 			return mv;
 		}
 		else {
@@ -45,13 +45,21 @@ public class AdvisorController {
 		}
 	}
 	
+	@RequestMapping(path="Logout.do")
+	public ModelAndView logout() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("index.jsp");
+		mv.addObject("user", new Advisor());
+		return mv;
+	}
+	
 	@RequestMapping(path="GoToAdvisor.do", method=RequestMethod.GET)
 	public ModelAndView getAdvisor() {
 		return new ModelAndView("advisor.jsp");
 	}
 
 	@RequestMapping(path="GetAdvisor.do", method=RequestMethod.GET)
-	public ModelAndView getAdvisor(Model model, @ModelAttribute ("name") String userName, int id) {
+	public ModelAndView getAdvisor(int id) {
 		// get the advisor from the table by id and send to advisor.jsp
 		Advisor a = advisorDAO.getAdvisor(id);
 		ModelAndView mv = new ModelAndView();
@@ -60,10 +68,7 @@ public class AdvisorController {
 		
 		// get the sales data for the advisor
 //		mv.addObject("fundSales", advisorDAO.getAdvisorSales(id));
-		
-		// get session name for logged in user
-		mv.addObject("userName", userName);
-		model.addAttribute(userName);
+	
 		return mv;
 	}
 	
@@ -86,17 +91,18 @@ public class AdvisorController {
 		String url = "http://fillmurray.com/" + hgt + "/" + wth;
 		mv.addObject("url", url);
 		
-		// carry over login information
-		// add stuff here
-		
+		// add position and location information to populate dropdown selections
+		mv.addObject("positions", advisorDAO.getAllPositions());
+		mv.addObject("locations", advisorDAO.getAllLocations());
 		return mv;
 	}
 	
 	@RequestMapping(path="AddAdvisor.do")
-	public ModelAndView addAdvisor(String name, int salary, String password, Position position, Location location) {
+	public ModelAndView addAdvisor(String name, Integer salary, String password, int position, int location) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("advisorTable.jsp");
+		mv.setViewName("advisorTable.jsp");		
 		advisorDAO.addAdvisor(name, salary, password, position, location);
+		mv.addObject("advisors", advisorDAO.getAllAdvisors());
 		return mv;
 	}
 
@@ -114,13 +120,21 @@ public class AdvisorController {
 		// send current advisor to update page
 		Advisor a = advisorDAO.getAdvisor(id);
 		mv.addObject("advisor", a);
+		
+		// add position and location information to populate dropdown selections
+		mv.addObject("positions", advisorDAO.getAllPositions());
+		mv.addObject("locations", advisorDAO.getAllLocations());
 		return mv;
 	}
 
-	@RequestMapping(path="UpdateAdvisor.do", method=RequestMethod.POST)
-	public ModelAndView updateAdvisor(int id, Advisor a) {
-		advisorDAO.updateAdvisor(id, a);
-		return new ModelAndView("advisor.jsp", "advisor", advisorDAO.getAdvisor(id));
+	@RequestMapping(path="UpdateAdvisor.do", method=RequestMethod.GET)
+	public ModelAndView updateAdvisor(Integer id, Advisor a) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("advisor.jsp");		
+		advisorDAO.updateAdvisor(id, a);		
+		mv.addObject("advisor", a);
+		System.out.println("Controller: " + a.getId() + " " + a.getName() + " " + a.getSalary() + " " + a.getPassword());
+		return mv;
 	}
 	
 	@RequestMapping(path="DeleteAdvisor.do", method=RequestMethod.POST)
