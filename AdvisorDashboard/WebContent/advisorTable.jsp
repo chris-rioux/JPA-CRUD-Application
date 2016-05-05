@@ -40,6 +40,14 @@
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
+	<!-- Logout Test -->
+	<c:if test="${status == 'out'}">
+		<script>
+			location.href = "index.jsp";
+		</script>
+	</c:if> 
+	
+	<c:if test="${status == 'in'}">
     <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -68,7 +76,7 @@
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${user.name}</a></li>
 		                    </li>
 		                    <li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="Logout.do">Log Out</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" id="logout" href="Logout.do">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>
@@ -162,6 +170,22 @@
     	} );
     </script>
     
+    <!-- jQuery Logout Function -->
+	<script>
+	$('a#logout').click(function() {
+	    $.ajax({
+	        url: "",
+	        context: document.body,
+	        success: function(s,x){
+
+	            $('html[manifest=saveappoffline.appcache]').attr('content', '');
+	                $(this).html(s);
+	        }
+	    }); 
+	});
+	</script>
+    
+    </c:if>
 </body>
 
 </html>

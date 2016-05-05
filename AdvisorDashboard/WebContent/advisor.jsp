@@ -39,7 +39,15 @@
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
+	
+	<!-- Logout Test -->
+	<c:if test="${status == 'out'}">
+		<script>
+			location.href = "index.jsp";
+		</script>
+	</c:if> 
+	
+	<c:if test="${status == 'in'}">
     <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -71,7 +79,7 @@
 		                        <li class="nav-item"><a class="nav-link page-scroll" href="#">Logged in as ${user.name}</a></li>
 		                    </li>
 		                    <li>
-		                        <li class="nav-item"><a class="nav-link page-scroll" href="Logout.do">Log Out</a></li>
+		                        <li class="nav-item"><a class="nav-link page-scroll" id="logout" href="Logout.do">Log Out</a></li>
 		                    </li>
                     	</c:otherwise>                  
                     </c:choose>
@@ -92,7 +100,7 @@
             	<div class="well" style="margin-top:100px;">
             		<div class="row clearfix">
 			        	<div class="col-xs-8">
-			            	<div class="panel panel-primary">	
+			            	<div class="panel panel-primary" style="margin-top:50px;">	
 			            		<div class="panel-heading" style="background-color:#797c80;color:000000">
 			                        <h3 class="panel-title">Advisor Information</h3>
 			                    </div>			
@@ -113,16 +121,34 @@
 			                        <h3 class="panel-title">Options</h3>
 			                    </div>
 			                    <div class="panel-body">
-									<form action="GoToUpdateAdvisor.do?id=${advisor.id}" method="GET">
-										<input type="hidden" name="id" value="${advisor.id}"/>
-							        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id" value="Update">Update</button>
-									</form>
+				                    <div class="btn-group center-block">
+										<form action="NavigatePrevious.do" method="GET">
+											<input type="hidden" name="id" value="${advisor.id - 1}"/>
+	 										<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id"><i class="fa fa-arrow-left fa-fw"></i>Last&nbsp;</button>
+	 									</form> 
+	 								</div>			
+	 								</br>				
+				                    <div class="btn-group center-block">
+										<form action="NavigateNext.do" method="GET">
+	 										<input type="hidden" name="id" value="${advisor.id + 1}"/>
+	 										<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id"><i class="fa fa-arrow-right fa-fw"></i>Next</button>
+										</form>
+									</div>  
+									</br>            
+				                    <div class="btn-group center-block">
+										<form action="GoToUpdateAdvisor.do?id=${advisor.id}" method="GET">
+											<input type="hidden" name="id" value="${advisor.id}"/>
+								        	<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id" value="Update">Update</button>
+										</form>
+									</div>
 									</br>
-							        <form action="DeleteAdvisor.do?id=${advisor.id}" method="POST">
-										<input type="hidden" name="id" value="${advisor.id}"/>
-										<button class="btn btn-md text-normal btn-danger" type="submit" name="id" value="Delete">Delete</button>
-									</form>
-								</div>            			
+				                    <div class="btn-group center-block">
+								        <form action="DeleteAdvisor.do?id=${advisor.id}" method="POST">
+											<input type="hidden" name="id" value="${advisor.id}"/>
+											<button class="btn btn-md text-normal btn-danger" type="submit" name="id" value="Delete">Delete</button>
+										</form>
+									</div>
+								</div><!-- /.panel-body -->           			
 			            	</div>
 			            </div>
 			        </div><!-- /.row -->
@@ -220,10 +246,10 @@
 			datasets: [
 				{
 					label: "Year Sales Dataset",
-					fillColor: randomColor(),
-            		strokeColor: randomColor(),
-            		highlightFill: randomColor(),
-            		highlightStroke: randomColor(),
+					fillColor: "rgba(151,187,205,0.6)",
+            		strokeColor: "rgba(151,187,205,.8)",
+            		highlightFill: "rgba(151,187,205,1)",
+            		highlightStroke: "rgba(151,187,205,1)",
 					data: [<c:forEach var="value" items="${advisorYearSales}">"${value[1]}", </c:forEach>]					
 				}
 			]		
@@ -268,7 +294,23 @@
 	
 	var advisorLineChart = new Chart(ctx).Line(advisorTrendSalesData, options);
 	</script>
+	
+	<!-- jQuery Logout Function -->
+	<script>
+	$('a#logout').click(function() {
+	    $.ajax({
+	        url: "",
+	        context: document.body,
+	        success: function(s,x){
+
+	            $('html[manifest=saveappoffline.appcache]').attr('content', '');
+	                $(this).html(s);
+	        }
+	    }); 
+	});
+	</script>
 	 
+	</c:if>
 </body>
 
 </html>

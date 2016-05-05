@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import entities.Advisor;
 import entities.Location;
 import entities.Position;
+import entities.Sale;
 import transferobjects.AdvisorTransferObject;
 
 @Transactional
@@ -37,7 +38,7 @@ public class AdvisorDBJPADAO implements AdvisorDBDAO {
 	public Advisor getAdvisor(int id) {
 		Advisor a = em.find(Advisor.class, id);
 		em.detach(a);
-		return a;
+		return a;			
 	}
 	
 	@Override
@@ -109,7 +110,19 @@ public class AdvisorDBJPADAO implements AdvisorDBDAO {
 	@Override
 	public void deleteAdvisor(int id) {
 		Advisor delAdv = em.find(Advisor.class, id);
-		em.remove(delAdv);
+		
+		if (id == 1) {
+		}
+		else {
+			// delete sales of advisor to allow deletion of advisor
+			List<Sale> sales = delAdv.getSales();
+			for (Sale s : sales) {
+				em.remove(s);
+			}
+			
+			// remove advisor from database
+			em.remove(delAdv);			
+		}
 	}
 	
 	// ensuring cascading db relationships between advisors and the positions and locations

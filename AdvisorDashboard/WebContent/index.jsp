@@ -86,6 +86,12 @@
 
     <!-- Login Section -->
     <section id="login" class="container content-section text-center" style="margin-top:-50px;">
+    	<div class="row">
+    		<div class="col-md-4 col-md-offset-4">
+    			<button type="button" class="btn btn-default" id="loginInstructions" data-container="body" data-toggle="popover" data-placement="top" data-content="User Name: 'Kamal Carter' &nbsp;&nbsp;&nbsp; Password: 'manager'">How Do I Login?</button>
+    		</div>
+    	</div>
+    	</br>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
             <form action="Login.do">
@@ -100,7 +106,7 @@
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form> 
             </div>
-        </div>
+        </div><!-- /.row -->
     </section>
 
     <!-- Contact Section -->
@@ -143,6 +149,13 @@
   
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+    
+    <!-- Enable Bootstrap Pop-Over -->
+    <script>
+    $(function () {
+  		$('[data-toggle="popover"]').popover()
+	})
+	</script>
     
 </body>
 
