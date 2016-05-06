@@ -123,14 +123,14 @@
 			                    <div class="panel-body">
 				                    <div class="btn-group center-block">
 										<form action="NavigatePrevious.do" method="GET">
-											<input type="hidden" name="id" value="${advisor.id - 1}"/>
+											<input type="hidden" name="id" value="${advisor.id}"/>
 	 										<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id"><i class="fa fa-arrow-left fa-fw"></i>Last&nbsp;</button>
 	 									</form> 
 	 								</div>			
 	 								</br>				
 				                    <div class="btn-group center-block">
 										<form action="NavigateNext.do" method="GET">
-	 										<input type="hidden" name="id" value="${advisor.id + 1}"/>
+	 										<input type="hidden" name="id" value="${advisor.id}"/>
 	 										<button class="btn btn-md text-normal btn-primary-outline" type="submit" name="id"><i class="fa fa-arrow-right fa-fw"></i>Next</button>
 										</form>
 									</div>  

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,89 +96,75 @@ public class AdvisorController {
 	
 	// toggling through advisors
 	@RequestMapping(path="NavigatePrevious.do")
-	public ModelAndView previous(AdvisorTransferObject a) {
-		try {
-			if (a.getId() < 1) {
-				a.setId(advisorDAO.getAllAdvisors().size() + 1);
-			}
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("advisor.jsp");
-			Advisor previousAdvisor = advisorDAO.getAdvisor(a.getId());
-			mv.addObject("advisor", previousAdvisor);
-			
-			// get the sales data for the advisor
-			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(previousAdvisor.getId()));	
-			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(previousAdvisor.getId()));	
-			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(previousAdvisor.getId()));
-			return mv;			
-		} catch (Exception e) {
-			try {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("advisor.jsp");
-				Advisor previousAdvisor = advisorDAO.getAdvisor(a.getId() - 1);
-				mv.addObject("advisor", previousAdvisor);
-				
-				// get the sales data for the advisor
-				mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(previousAdvisor.getId()));	
-				mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(previousAdvisor.getId()));	
-				mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(previousAdvisor.getId()));
-				return mv;
-			} catch (Exception e2) {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("advisor.jsp");
-				Advisor previousAdvisor = advisorDAO.getAdvisor(a.getId() - 2);
-				mv.addObject("advisor", previousAdvisor);
-				
-				// get the sales data for the advisor
-				mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(previousAdvisor.getId()));	
-				mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(previousAdvisor.getId()));	
-				mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(previousAdvisor.getId()));
-				return mv;
+	public ModelAndView previous(int id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("advisor.jsp");
+		Advisor advisor = advisorDAO.getAdvisor(id);
+		List<Advisor> list = advisorDAO.getAllAdvisors();
+		
+		// finds index of current advisor
+		int index = 0;
+		for (Advisor a : list) {
+			index++;
+			if ( advisor.getName().equals(a.getName()) ) {
+				break;
 			}
 		}
+		
+		// accounts for accessing advisor before the beginning of the list
+		if ( (index - 2) < 0 ) {
+			mv.addObject("advisor", list.get(list.size() - 1));
+			
+			// get the sales data for the advisor
+			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(list.get(list.size() - 1).getId()));	
+			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(list.get(list.size() - 1).getId()));	
+			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(list.get(list.size() - 1).getId()));
+		}
+		else {
+			mv.addObject("advisor", list.get(index - 2));
+			
+			// get the sales data for the advisor
+			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(list.get(index - 2).getId()));	
+			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(list.get(index - 2).getId()));	
+			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(list.get(index - 2).getId()));
+		}
+		return mv;
 	}
 	
 	@RequestMapping(path="NavigateNext.do")
-	public ModelAndView next(AdvisorTransferObject a) {
-		try {
-			if (a.getId() > advisorDAO.getAllAdvisors().size() + 1) {
-				a.setId(1);
-			}
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("advisor.jsp");
-			Advisor nextAdvisor = advisorDAO.getAdvisor(a.getId());
-			mv.addObject("advisor", nextAdvisor);
-			
-			// get the sales data for the advisor
-			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(nextAdvisor.getId()));	
-			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(nextAdvisor.getId()));	
-			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(nextAdvisor.getId()));	
-			return mv;
-		} catch (Exception e) {
-			try {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("advisor.jsp");
-				Advisor nextAdvisor = advisorDAO.getAdvisor(a.getId() + 1);
-				mv.addObject("advisor", nextAdvisor);
-				
-				// get the sales data for the advisor
-				mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(nextAdvisor.getId()));	
-				mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(nextAdvisor.getId()));	
-				mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(nextAdvisor.getId()));	
-				return mv;
-			} catch (Exception e2) {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("advisor.jsp");
-				Advisor nextAdvisor = advisorDAO.getAdvisor(a.getId() + 2);
-				mv.addObject("advisor", nextAdvisor);
-				
-				// get the sales data for the advisor
-				mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(nextAdvisor.getId()));	
-				mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(nextAdvisor.getId()));	
-				mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(nextAdvisor.getId()));	
-				return mv;			
+	public ModelAndView next(int id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("advisor.jsp");
+		Advisor advisor = advisorDAO.getAdvisor(id);
+		List<Advisor> list = advisorDAO.getAllAdvisors();
+		
+		// finds index of current advisor
+		int index = 0;
+		for (Advisor a : list) {
+			index++;
+			if ( advisor.getName().equals(a.getName()) ) {
+				break;
 			}
 		}
+		
+		// accounts for accessing advisor before the beginning of the list
+		if ( index > (list.size() - 1) ) {
+			mv.addObject("advisor", list.get(0));
+			
+			// get the sales data for the advisor
+			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(list.get(0).getId()));	
+			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(list.get(0).getId()));	
+			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(list.get(0).getId()));
+		}
+		else {
+			mv.addObject("advisor", list.get(index));
+			
+			// get the sales data for the advisor
+			mv.addObject("advisorFundSales", advisorDAO.getAdvisorFundSales(list.get(index).getId()));	
+			mv.addObject("advisorYearSales", advisorDAO.getAdvisorYearSales(list.get(index).getId()));	
+			mv.addObject("advisorTrendSales", advisorDAO.getAdvisorTrendSales(list.get(index).getId()));
+		}
+		return mv;
 	}
 	
 	// adding an advisor
