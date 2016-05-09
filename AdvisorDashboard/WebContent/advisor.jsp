@@ -230,8 +230,8 @@
 	            		];
 	var options = {
 		tooltipTemplate: 
-			function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
-				animation: false,
+			function(label){return  label.label.toString();},
+				animation: true,
 		scaleLabel:
 			function(label){return  '$' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
 	};
