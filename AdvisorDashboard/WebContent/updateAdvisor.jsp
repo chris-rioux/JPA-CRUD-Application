@@ -159,7 +159,7 @@
     <section id="contact" class="container content-section text-center" style="margin-top:-100px;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-            	<p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
+            	<p>Copyright &copy; <a href="http://www.chrisriouxapplications.com" target="_blank">Chris Rioux Applications</a> 2016</p>                
             </div>
         </div>
     </section>

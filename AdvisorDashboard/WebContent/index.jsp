@@ -126,7 +126,7 @@
                         <a href="https://www.linkedin.com/in/chrisrioux" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square fa-fw"></i> <span class="network-name">LinkedIn</span></a>
                     </li>
                 </ul>
-            <p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
+            <p>Copyright &copy; <a href="http://www.chrisriouxapplications.com" target="_blank">Chris Rioux Applications</a> 2016</p>                
             </div>
         </div>
     </section>

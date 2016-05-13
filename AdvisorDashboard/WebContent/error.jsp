@@ -68,7 +68,6 @@
     </nav>
 
     <!-- Gosling --> 
- 
 	<div class="container-fluid" style="margin-top:125px;text-align:center;">
 		<div class="row" id="gosling">
 			<h5 class="text-xs-center">Looks like something happened, <br/> But Ryan was here to handle it...</h5>
@@ -99,7 +98,7 @@
                         <a href="https://www.linkedin.com/in/chrisrioux" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square fa-fw"></i> <span class="network-name">LinkedIn</span></a>
                     </li>
                 </ul>
-            <p>Copyright &copy; <a href="http://www.chrisriouxdevelopment.com" target="_blank">Chris Rioux Development</a> 2016</p>                
+            <p>Copyright &copy; <a href="http://www.chrisriouxapplications.com" target="_blank">Chris Rioux Applications</a> 2016</p>                
             </div>
         </div>
     </section>
